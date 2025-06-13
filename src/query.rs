@@ -35,6 +35,13 @@ impl<'a> Query<'a> {
         self.params.push(param.into_sql());
     }
 
+    /// Add a pre-calculated column field to the query. Must be called exactly as many times
+    /// as there are parameters in the given SQL. Otherwise the query will fail
+    /// on execution.
+    pub fn add_column_data(&mut self, col_data: ColumnData<'a>) {
+        self.params.push(col_data);
+    }
+
     /// Executes SQL statements in the SQL Server, returning the number rows
     /// affected. Useful for `INSERT`, `UPDATE` and `DELETE` statements. See
     /// [`Client#execute`] for a simpler API if the parameters are statically
